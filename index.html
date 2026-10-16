@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan - Romeo & Juliet</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: {
+                            50: '#f4f7f4',
+                            100: '#e3ebe3',
+                            200: '#c7d7c7',
+                            500: '#87a087',
+                            600: '#6b826b',
+                            700: '#546854',
+                            800: '#435343',
+                        },
+                        cream: '#fdfbf7',
+                        gold: '#d4af37',
+                        rosegold: '#b76e79',
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fdfbf7;
+            color: #435343;
+            overflow-x: hidden;
+        }
+        .font-serif-title {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        /* Glassmorphic effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fdfbf7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #87a087;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-sage-200">
+
+    <!-- Audio Player Toggle -->
+    <button id="musicToggle" onclick="toggleMusic()" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-sage-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-sage-700 transition-all transform hover:scale-110 focus:outline-none" title="Putar/Hentikan Musik">
+        <i id="musicIcon" class="fas fa-music animate-pulse"></i>
+    </button>
+    <!-- Background Audio (Placeholder License-Free Acoustic Wedding Music) -->
+    <audio id="bgMusic" loop preload="none">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=wedding-acoustic-guitar-114888.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Overlay Cover (Gate / Door Opener) -->
+    <div id="coverOverlay" class="fixed inset-0 z-50 bg-cream flex flex-col items-center justify-center text-center px-4 transition-all duration-1000">
+        <div data-aos="fade-up" class="max-w-md mx-auto p-8 rounded-2xl glass-card shadow-xl border border-sage-200">
+            <p class="text-sage-600 tracking-widest uppercase text-xs font-semibold mb-3">Undangan Pernikahan</p>
+            <h1 class="font-serif-title text-5xl md:text-6xl text-sage-800 font-bold mb-4">Romeo & Juliet</h1>
+            <p class="text-gray-600 text-sm italic mb-6">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari meksudmu sendiri..."</p>
+            <p class="text-xs uppercase tracking-wider text-sage-700 font-semibold mb-6">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+            <button onclick="openInvitation()" class="px-8 py-3 bg-sage-600 hover:bg-sage-700 text-white font-medium text-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                <i class="fas fa-envelope-open mr-2"></i> Buka Undangan
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="min-h-screen flex flex-col items-center justify-center text-center py-20 relative">
+            <div data-aos="zoom-in" data-aos-duration="1200" class="glass-card p-8 md:p-14 rounded-3xl shadow-xl w-full max-w-2xl border border-sage-100 relative overflow-hidden">
+                <!-- Floral Decorative Accents -->
+                <div class="absolute -top-10 -left-10 w-28 h-28 bg-sage-100 rounded-full blur-2xl opacity-60"></div>
+                <div class="absolute -bottom-10 -right-10 w-28 h-28 bg-rosegold/20 rounded-full blur-2xl opacity-60"></div>
+
+                <span class="text-sage-600 uppercase tracking-widest text-xs font-semibold mb-2 block">The Wedding of</span>
+                <h1 class="font-serif-title text-5xl sm:text-7xl font-bold text-sage-800 mb-4">Romeo &amp; Juliet</h1>
+                <p class="text-sage-700 text-base sm:text-lg font-medium tracking-wide mb-8">Sabtu, 24 Oktober 2026</p>
+
+                <!-- Countdown Timer -->
+                <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-md mx-auto mb-8">
+                    <div class="bg-sage-50 border border-sage-200 p-3 rounded-xl shadow-sm">
+                        <span id="days" class="block text-2xl sm:text-3xl font-bold text-sage-800">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase text-sage-600 tracking-wider">Hari</span>
+                    </div>
+                    <div class="bg-sage-50 border border-sage-200 p-3 rounded-xl shadow-sm">
+                        <span id="hours" class="block text-2xl sm:text-3xl font-bold text-sage-800">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase text-sage-600 tracking-wider">Jam</span>
+                    </div>
+                    <div class="bg-sage-50 border border-sage-200 p-3 rounded-xl shadow-sm">
+                        <span id="minutes" class="block text-2xl sm:text-3xl font-bold text-sage-800">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase text-sage-600 tracking-wider">Menit</span>
+                    </div>
+                    <div class="bg-sage-50 border border-sage-200 p-3 rounded-xl shadow-sm">
+                        <span id="seconds" class="block text-2xl sm:text-3xl font-bold text-sage-800">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase text-sage-600 tracking-wider">Detik</span>
+                    </div>
+                </div>
+
+                <a href="#couple" class="inline-block text-sage-600 hover:text-sage-800 transition-colors animate-bounce mt-4">
+                    <i class="fas fa-chevron-down text-xl"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- COUPLE SECTION -->
+        <section id="couple" class="py-16 text-center">
+            <div data-aos="fade-up" class="mb-12">
+                <span class="text-sage-600 uppercase tracking-widest text-xs font-semibold">Mempelai</span>
+                <h2 class="font-serif-title text-4xl sm:text-5xl font-bold text-sage-800 mt-1">Pasangan Bahagia</h2>
+                <div class="w-16 h-0.5 bg-sage-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <!-- Groom -->
+                <div data-aos="fade-right" class="glass-card p-8 rounded-2xl shadow-md border border-sage-100 flex flex-col items-center">
+                    <div class="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-sage-200 shadow-inner bg-sage-100 flex items-center justify-center">
+                        <!-- Placeholder Avatar / Image -->
+                        <span class="font-serif-title text-4xl text-sage-600 font-bold">R</span>
+                    </div>
+                    <h3 class="font-serif-title text-3xl font-bold text-sage-800 mb-1">Romeo Montague, S.T.</h3>
+                    <p class="text-xs text-sage-600 uppercase tracking-wider mb-4">Mempelai Pria</p>
+                    <p class="text-sm text-gray-600 leading-relaxed mb-2">Putra Pertama dari:</p>
+                    <p class="text-sm font-semibold text-sage-800">Bpk. Montague &amp; Ibu Montague</p>
+                </div>
+
+                <!-- Bride -->
+                <div data-aos="fade-left" class="glass-card p-8 rounded-2xl shadow-md border border-sage-100 flex flex-col items-center">
+                    <div class="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-sage-200 shadow-inner bg-sage-100 flex items-center justify-center">
+                        <!-- Placeholder Avatar / Image -->
+                        <span class="font-serif-title text-4xl text-sage-600 font-bold">J</span>
+                    </div>
+                    <h3 class="font-serif-title text-3xl font-bold text-sage-800 mb-1">Juliet Capulet, S.E.</h3>
+                    <p class="text-xs text-sage-600 uppercase tracking-wider mb-4">Mempelai Wanita</p>
+                    <p class="text-sm text-gray-600 leading-relaxed mb-2">Putri Kedua dari:</p>
+                    <p class="text-sm font-semibold text-sage-800">Bpk. Capulet &amp; Ibu Capulet</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EVENT DETAILS SECTION -->
+        <section id="event" class="py-16">
+            <div data-aos="fade-up" class="text-center mb-12">
+                <span class="text-sage-600 uppercase tracking-widest text-xs font-semibold">Jadwal Acara</span>
+                <h2 class="font-serif-title text-4xl sm:text-5xl font-bold text-sage-800 mt-1">Waktu &amp; Tempat</h2>
+                <div class="w-16 h-0.5 bg-sage-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Akad Nikah -->
+                <div data-aos="fade-up" data-aos-delay="100" class="glass-card p-8 rounded-2xl shadow-md border border-sage-100 text-center relative overflow-hidden">
+                    <div class="inline-flex items-center justify-center w-12 h-12 bg-sage-100 text-sage-700 rounded-full mb-4">
+                        <i class="fas fa-ring text-xl"></i>
+                    </div>
+                    <h3 class="font-serif-title text-3xl font-bold text-sage-800 mb-2">Akad Nikah</h3>
+                    <p class="text-sm text-sage-700 font-medium mb-1"><i class="far fa-calendar mr-2"></i>Sabtu, 24 Oktober 2026</p>
+                    <p class="text-sm text-sage-700 font-medium mb-4"><i class="far fa-clock mr-2"></i>08.00 WIB - Selesai</p>
+                    <p class="text-sm text-gray-600 font-semibold mb-1">Grand Ballroom Hotel Santika</p>
+                    <p class="text-xs text-gray-500 mb-6">Jl. Sudirman No. 123, Jakarta Selatan</p>
+                </div>
+
+                <!-- Resepsi -->
+                <div data-aos="fade-up" data-aos-delay="200" class="glass-card p-8 rounded-2xl shadow-md border border-sage-100 text-center relative overflow-hidden">
+                    <div class="inline-flex items-center justify-center w-12 h-12 bg-sage-100 text-sage-700 rounded-full mb-4">
+                        <i class="fas fa-glass-cheers text-xl"></i>
+                    </div>
+                    <h3 class="font-serif-title text-3xl font-bold text-sage-800 mb-2">Resepsi</h3>
+                    <p class="text-sm text-sage-700 font-medium mb-1"><i class="far fa-calendar mr-2"></i>Sabtu, 24 Oktober 2026</p>
+                    <p class="text-sm text-sage-700 font-medium mb-4"><i class="far fa-clock mr-2"></i>11.00 WIB - 14.00 WIB</p>
+                    <p class="text-sm text-gray-600 font-semibold mb-1">Grand Ballroom Hotel Santika</p>
+                    <p class="text-xs text-gray-500 mb-6">Jl. Sudirman No. 123, Jakarta Selatan</p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div data-aos="fade-up" class="flex flex-wrap justify-center gap-4 mt-8">
+                <a href="https://maps.google.com" target="_blank" class="px-6 py-3 bg-sage-600 hover:bg-sage-700 text-white rounded-full text-sm font-medium shadow-md transition-all flex items-center">
+                    <i class="fas fa-map-marker-alt mr-2"></i> Buka Google Maps
+                </a>
+                <button onclick="addToCalendar()" class="px-6 py-3 bg-white border border-sage-300 hover:bg-sage-50 text-sage-800 rounded-full text-sm font-medium shadow-sm transition-all flex items-center">
+                    <i class="far fa-calendar-plus mr-2"></i> Simpan Tanggal
+                </button>
+            </div>
+        </section>
+
+        <!-- RSVP & GUESTBOOK SECTION -->
+        <section id="rsvp" class="py-16">
+            <div data-aos="fade-up" class="text-center mb-12">
+                <span class="text-sage-600 uppercase tracking-widest text-xs font-semibold">Konfirmasi &amp; Doa</span>
+                <h2 class="font-serif-title text-4xl sm:text-5xl font-bold text-sage-800 mt-1">RSVP &amp; Ucapan</h2>
+                <div class="w-16 h-0.5 bg-sage-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Form RSVP -->
+                <div data-aos="fade-right" class="glass-card p-6 sm:p-8 rounded-2xl shadow-md border border-sage-100">
+                    <form id="rsvpForm" onsubmit="handleRSVP(event)">
+                        <div class="mb-4">
+                            <label class="block text-xs font-semibold uppercase text-sage-700 mb-2">Nama Lengkap</label>
+                            <input type="text" id="guestName" required placeholder="Masukkan nama Anda" class="w-full px-4 py-3 rounded-xl border border-sage-200 focus:outline-none focus:ring-2 focus:ring-sage-500 text-sm bg-white/80">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-xs font-semibold uppercase text-sage-700 mb-2">Konfirmasi Kehadiran</label>
+                            <select id="attendance" required class="w-full px-4 py-3 rounded-xl border border-sage-200 focus:outline-none focus:ring-2 focus:ring-sage-500 text-sm bg-white/80">
+                                <option value="" disabled selected>Pilih Kehadiran</option>
+                                <option value="Hadir">Ya, Saya Akan Hadir</option>
+                                <option value="Tidak Hadir">Maaf, Saya Tidak Bisa Hadir</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-xs font-semibold uppercase text-sage-700 mb-2">Pesan / Ucapan Doa</label>
+                            <textarea id="guestMessage" rows="4" required placeholder="Tuliskan ucapan & doa restu..." class="w-full px-4 py-3 rounded-xl border border-sage-200 focus:outline-none focus:ring-2 focus:ring-sage-500 text-sm bg-white/80"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-sage-600 hover:bg-sage-700 text-white rounded-xl text-sm font-medium shadow-md transition-all">
+                            Kirim Konfirmasi
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Live Guestbook Messages -->
+                <div data-aos="fade-left" class="glass-card p-6 sm:p-8 rounded-2xl shadow-md border border-sage-100 flex flex-col h-[420px]">
+                    <h3 class="font-serif-title text-2xl font-bold text-sage-800 mb-4 pb-2 border-b border-sage-200 flex items-center justify-between">
+                        <span>Ucapan Doa</span>
+                        <span id="wishCount" class="text-xs font-sans font-normal text-sage-600 bg-sage-100 px-3 py-1 rounded-full">0 Pesan</span>
+                    </h3>
+                    <div id="wishesList" class="overflow-y-auto space-y-4 flex-1 pr-2">
+                        <!-- Messages dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIGITAL GIFT SECTION -->
+        <section id="gift" class="py-16">
+            <div data-aos="fade-up" class="text-center mb-12">
+                <span class="text-sage-600 uppercase tracking-widest text-xs font-semibold">Tanda Kasih</span>
+                <h2 class="font-serif-title text-4xl sm:text-5xl font-bold text-sage-800 mt-1">Amplop Digital</h2>
+                <p class="text-sm text-gray-600 max-w-md mx-auto mt-2">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika Anda ingin memberi hadiah, kami menyediakan amplop digital.</p>
+                <div class="w-16 h-0.5 bg-sage-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                <!-- Bank Account 1 -->
+                <div data-aos="zoom-in" data-aos-delay="100" class="glass-card p-6 rounded-2xl border border-sage-100 shadow-md text-center relative">
+                    <div class="text-lg font-bold text-sage-800 mb-1">Bank BCA</div>
+                    <div class="text-xs text-gray-500 mb-3">a.n. Romeo Montague</div>
+                    <div class="bg-sage-50 border border-sage-200 py-2 px-4 rounded-lg font-mono text-sage-800 text-lg font-semibold tracking-wider mb-4 flex items-center justify-center justify-between">
+                        <span id="accNum1">1234567890</span>
+                        <button onclick="copyToClipboard('accNum1', 'btnCopy1')" id="btnCopy1" class="text-xs bg-sage-600 hover:bg-sage-700 text-white px-3 py-1 rounded-md transition-colors ml-2 font-sans">
+                            Salin
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bank Account 2 / E-Wallet -->
+                <div data-aos="zoom-in" data-aos-delay="200" class="glass-card p-6 rounded-2xl border border-sage-100 shadow-md text-center relative">
+                    <div class="text-lg font-bold text-sage-800 mb-1">Bank Mandiri</div>
+                    <div class="text-xs text-gray-500 mb-3">a.n. Juliet Capulet</div>
+                    <div class="bg-sage-50 border border-sage-200 py-2 px-4 rounded-lg font-mono text-sage-800 text-lg font-semibold tracking-wider mb-4 flex items-center justify-center justify-between">
+                        <span id="accNum2">0987654321</span>
+                        <button onclick="copyToClipboard('accNum2', 'btnCopy2')" id="btnCopy2" class="text-xs bg-sage-600 hover:bg-sage-700 text-white px-3 py-1 rounded-md transition-colors ml-2 font-sans">
+                            Salin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="py-12 text-center text-xs text-sage-600 border-t border-sage-200/60 mt-8">
+            <p class="font-serif-title text-2xl font-bold text-sage-800 mb-2">Romeo &amp; Juliet</p>
+            <p class="mb-4">Terima kasih atas doa &amp; dukungan Anda.</p>
+            <p class="text-gray-400">&copy; 2026 Undangan Pernikahan Digital. All Rights Reserved.</p>
+        </footer>
+
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-5 right-5 bg-sage-800 text-white px-5 py-3 rounded-xl shadow-2xl text-xs sm:text-sm transform translate-y-[-150%] transition-transform duration-300 z-50 flex items-center">
+        <i class="fas fa-check-circle text-green-400 mr-2 text-base"></i>
+        <span id="toastMsg">Berhasil disalin!</span>
+    </div>
+
+    <!-- AOS Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            once: true,
+            easing: 'ease-out-quad'
+        });
+
+        // Music Controls
+        let isPlaying = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const musicIcon = document.getElementById('musicIcon');
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.classList.remove('fa-music', 'animate-pulse');
+                musicIcon.classList.add('fa-volume-mute');
+            } else {
+                bgMusic.play().catch(e => console.log('Audio autoplay prevented'));
+                musicIcon.classList.remove('fa-volume-mute');
+                musicIcon.classList.add('fa-music', 'animate-pulse');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Open Invitation Gate
+        function openInvitation() {
+            const overlay = document.getElementById('coverOverlay');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 1000);
+            
+            // Auto play audio when invitation is opened
+            toggleMusic();
+        }
+
+        // Countdown Timer Logic
+        const targetDate = new Date("October 24, 2026 08:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days < 10 ? '0' + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
+            } else {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Copy to Clipboard Functionality
+        function copyToClipboard(elementId, btnId) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            
+            // Execute fallback copy method for iframe compatibility
+            const tempInput = document.createElement("input");
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            // Show Toast
+            showToast("Nomor rekening berhasil disalin!");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.remove('translate-y-[-150%]');
+            toast.classList.add('translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0');
+                toast.classList.add('translate-y-[-150%]');
+            }, 3000);
+        }
+
+        // RSVP and Local Storage Guestbook Logic
+        const defaultWishes = [
+            { name: "Ahmad & Keluarga", status: "Hadir", message: "Selamat untuk Romeo dan Juliet! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah." },
+            { name: "Siti Rahma", status: "Hadir", message: "Selamat menempuh hidup baru ya. Semoga berbahagia selalu sampai anak cucu!" }
+        ];
+
+        function loadWishes() {
+            const savedWishes = JSON.parse(localStorage.getItem('weddingWishes')) || defaultWishes;
+            const wishesList = document.getElementById('wishesList');
+            const wishCount = document.getElementById('wishCount');
+            
+            wishesList.innerHTML = '';
+            wishCount.innerText = `${savedWishes.length} Pesan`;
+
+            savedWishes.forEach(item => {
+                const isAttending = item.status === "Hadir";
+                const badgeClass = isAttending ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700";
+                
+                const card = document.createElement('div');
+                card.className = "bg-white/90 p-4 rounded-xl border border-sage-100 shadow-sm text-xs sm:text-sm";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="font-bold text-sage-800">${escapeHtml(item.name)}</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded-full font-medium ${badgeClass}">${escapeHtml(item.status)}</span>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">${escapeHtml(item.message)}</p>
+                `;
+                wishesList.prepend(card);
+            });
+        }
+
+        function handleRSVP(event) {
+            event.preventDefault();
+            const name = document.getElementById('guestName').value.trim();
+            const status = document.getElementById('attendance').value;
+            const message = document.getElementById('guestMessage').value.trim();
+
+            if (!name || !status || !message) return;
+
+            const savedWishes = JSON.parse(localStorage.getItem('weddingWishes')) || defaultWishes;
+            savedWishes.push({ name, status, message });
+            localStorage.setItem('weddingWishes', JSON.stringify(savedWishes));
+
+            document.getElementById('rsvpForm').reset();
+            loadWishes();
+            showToast("Konfirmasi & Ucapan Anda berhasil dikirim!");
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+            });
+        }
+
+        // Calendar Event Handler
+        function addToCalendar() {
+            const title = encodeURIComponent("Pernikahan Romeo & Juliet");
+            const details = encodeURIComponent("Acara Pernikahan Romeo & Juliet - Hotel Santika Jakarta");
+            const location = encodeURIComponent("Grand Ballroom Hotel Santika, Jakarta Selatan");
+            const startDate = "20261024T010000Z"; // UTC time
+            const endDate = "20261024T070000Z";
+
+            const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
+            window.open(googleCalendarUrl, '_blank');
+        }
+
+        // Initialize guestbook on page load
+        window.onload = function() {
+            loadWishes();
+        };
+    </script>
+</body>
+</html>
